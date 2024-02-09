@@ -1,0 +1,82 @@
+.calculator {
+	width: 240px;
+	position: relative;
+	border-radius: 8px;
+	box-shadow: -5px -5px 20px 5px rgba(255, 255, 255, 0.08),
+		5px 5px 20px 5px rgba(0, 0, 0, 0.5), -1px -1px 0px 0px rgba(255, 255, 255, 0.2),
+		1px 1px 0px 0px rgba(0, 0, 0, 0.4);
+	background: linear-gradient(120deg, #464e55 0%, #292929 100%);
+}
+
+.calculator:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	background: #fff;
+	display: block;
+	width: calc(100% + 2px);
+	height: calc(100% + 2px);
+	margin: -1px;
+	top: 0;
+	border-radius: 8px;
+	background: linear-gradient(120deg, #4f6579 0%, #312e40 100%);
+}
+
+.input {
+	outline: none;
+	border: none;
+	margin: 0;
+	width: 100%;
+	background: none;
+	color: #fff;
+	caret-color: transparent;
+	height: 42px;
+	box-sizing: border-box;
+	text-align: right;
+	padding: 0 20px;
+	line-height: 40px;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.keypad {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding: 20px;
+	gap: 10px;
+}
+
+button {
+	border-radius: 50%;
+	outline: none;
+	border: none;
+	width: 42px;
+	height: 42px;
+	cursor: pointer;
+	background: #7c7c7c;
+	font-size: 25px;
+	font-weight: bold;
+	transition: all 0.2s;
+}
+
+button:active {
+	font-size: 20px;
+	opacity: 0.6;
+}
+
+.equal {
+	background: #00cf00;
+}
+
+.operatorCSS {
+	color: #f1a33c;
+}
+
+.clear {
+	background: #ff0000;
+}
+
+.result {
+	color: #28c700;
+}
