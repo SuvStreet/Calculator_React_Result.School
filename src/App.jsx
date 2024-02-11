@@ -21,11 +21,23 @@ const BUTTONS = [
 ]
 
 function App() {
-	const { calculator, display, keypad, input, operatorCSS, clear, equal, result } = style
+	const {
+		calculator,
+		display,
+		keypad,
+		input,
+		operatorCSS,
+		clear,
+		equal,
+		result,
+		smallFontSize17,
+	} = style
+
 	const [operand1, setOperand1] = useState('')
 	const [operator, setOperator] = useState('')
 	const [operand2, setOperand2] = useState('')
 	const [inResult, setInResult] = useState(false)
+	const [fontSize, setFontSize] = useState(false)
 
 	useEffect(() => {
 		document.addEventListener('keydown', onKeypress)
@@ -47,32 +59,54 @@ function App() {
 	const handleClick = (e) => {
 		const { innerText } = e.target
 
-		if (Number(innerText) || innerText === '0') {
+		enteringNumbers(innerText)
+		enterClear(innerText)
+		enteringOperators(innerText)
+		enteringResult(innerText)
+	}
+
+	function enteringNumbers(num) {
+		if (Number(num) || num === '0') {
 			if (operator !== '') {
-				setOperand2(operand2 + innerText)
+				if (operand2 === '' && num === '0') return
+				if (operand2.length <= 9) {
+					setOperand2(operand2 + num)
+				}
 			} else {
-				setOperand1(operand1 + innerText)
+				if (operand1 === '' && num === '0') return
+				if (operand1.length <= 9) {
+					setOperand1(operand1 + num)
+				}
 			}
 		}
 
-		if (innerText === 'C' || innerText === 'Delete') {
+		if ((operand1 + operator + operand2).length >= 14) {
+			setFontSize(true)
+		}
+	}
+
+	function enterClear(clear) {
+		if (clear === 'C' || clear === 'Delete') {
 			setOperand1('')
 			setOperator('')
 			setOperand2('')
 			setInResult(false)
+			setFontSize(false)
 		}
+	}
 
-		if (['+', '-', '*', '/'].includes(innerText)) {
+	function enteringOperators(op) {
+		if (['+', '-', '*', '/'].includes(op)) {
 			if (operator === '' || operand2 === '') {
-				setOperator(innerText)
+				setOperator(op)
 			}
 		}
+	}
 
-		if (innerText === '=' || innerText === 'Enter') {
+	function enteringResult(result) {
+		if (result === '=' || result === 'Enter') {
 			if (operand1 !== '' && operand2 !== '') {
 				setInResult(true)
-
-				console.log(operand1, operator, operand2)
 
 				switch (operator) {
 					case '+':
@@ -90,6 +124,7 @@ function App() {
 								? +operand1 / +operand2
 								: (+operand1 / +operand2).toFixed(5),
 						)
+						setFontSize(false)
 						break
 					default:
 						break
@@ -106,7 +141,13 @@ function App() {
 				<div className={calculator}>
 					<div className={display}>
 						<input
-							className={input + ' ' + `${inResult ? result : null}`}
+							className={
+								input +
+								' ' +
+								`${inResult ? result : ''}` +
+								' ' +
+								`${fontSize ? smallFontSize17 : ''}`
+							}
 							type='text'
 							value={operand1 + operator + operand2}
 							placeholder='0'

@@ -80,3 +80,7 @@ button:active {
 .result {
 	color: #28c700;
 }
+
+.smallFontSize17 {
+	font-size: 17px;
+}
